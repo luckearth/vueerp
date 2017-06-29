@@ -2,6 +2,7 @@ const routes = [
     {
         path: '/',
         name: '首页',
+        component: resolve => require(['../page/layout/index.vue'], resolve),
         redirect: '/home',
         children: [
             {
@@ -14,7 +15,7 @@ const routes = [
                 path: 'test',
                 name: 'test',
                 icon: 'el-icon-document',
-                component: resolve => require(['../page/layout/index.vue'], resolve)
+                component: resolve => require(['../page/test.vue'], resolve)
             },
         ]
     },

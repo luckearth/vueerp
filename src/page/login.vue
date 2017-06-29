@@ -3,12 +3,12 @@
     <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left" label-width="0px" class="card-box login-form">
       <h3 class="title">系统登录</h3>
       <el-form-item prop="username">
-        <span class="svg-container"> </span>
+        <span class="svg-container"><wscn-icon-svg icon-class="jiedianyoujian"></wscn-icon-svg></span>
         <el-input v-model="loginForm.username" placeholder="请输入账号"></el-input>
       </el-form-item>
-  
+      
       <el-form-item prop="password">
-        <span class="svg-container"> </span>
+        <span class="svg-container"><wscn-icon-svg icon-class="mima"></wscn-icon-svg></span>
         <el-input v-model="loginForm.password" placeholder="请输入密码" @keyup.enter.native="submitForm"></el-input>
       </el-form-item>
   
