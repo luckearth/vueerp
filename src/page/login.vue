@@ -27,7 +27,7 @@ export default {
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (vm.$store.state.token) {
-        vm.$router.push('main');
+        vm.$router.push('home');
       }
     })
   },

@@ -2,8 +2,21 @@ const routes = [
     {
         path: '/',
         name: '首页',
-        icon: 'el-icon-star-on',
-        component: resolve => require(['../page/home.vue'], resolve)
+        redirect: '/home',
+        children: [
+            {
+                path: 'home',
+                name: '首页',
+                icon: 'el-icon-document',
+                component: resolve => require(['../page/home.vue'], resolve)
+            },
+            {
+                path: 'test',
+                name: 'test',
+                icon: 'el-icon-document',
+                component: resolve => require(['../page/layout/index.vue'], resolve)
+            },
+        ]
     },
     {
         path: '/login',
@@ -19,7 +32,7 @@ const routes = [
     {
         path: '/404',
         name: '错误页面',
-        component: resolve => require(['../page/logout.vue'], resolve),
+        component: resolve => require(['../page/404.vue'], resolve),
         meta: { auth: false }  // 添加该字段，表示进入这个路由不需要验证
     },
     {
