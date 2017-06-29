@@ -5,6 +5,10 @@ import store from './store'
 import VueMaterial from 'vue-material'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import './components/icon-svg/index'; // 封装的svg组件
+import './assets/custom-theme/index.css'; // 换肤版本element-ui css https://github.com/PanJiaChen/custom-element-theme
+import './styles/normalize.css';// normalize.css 样式格式化
+import './styles/index.scss'; // 全局自定义的css样式
 Vue.use(ElementUI, VueMaterial)
 Vue.config.productionTip = false
 //判断页面是否需要验证
