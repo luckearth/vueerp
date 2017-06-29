@@ -67,7 +67,7 @@ export default {
             userLogin(this.loginForm, result => {
               if (result.success === 1) {//返回API的数据再判断
                 this.actionUserLogin(result.data);// 更新TOKEN
-                this.$router.push('main');// 跳转
+                this.$router.push('home');// 跳转
                 this.$message({ message: '登录成功', type: 'success' });// 成功弹窗提示
               } else {
                 this.$message(result.message);// 错误弹窗提示

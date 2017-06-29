@@ -7,12 +7,13 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 Vue.use(ElementUI, VueMaterial)
 Vue.config.productionTip = false
-
+//判断页面是否需要验证
 router.beforeEach(({ meta, path }, from, next) => {
-    const { auth = false } = meta   //auth 设置默认不要验证就可以进入下一个页面 meta代表的是to中的meta对象，path代表的是to中的path对象
-    var token = localStorage.getItem('token');  // true用户已登录， false用户未登录　
-    if (auth && !token && path !== '/login') {  // auth 代表需要通过用户身份验证，默认为true，代表需要被验证， false为不用检验
-        return next({ path: '/login' })  // 跳转到login页面
+    const { auth = true } = meta   //路由未设置auth则默认初始化为true, meta代表的是to中的meta对象，path代表的是to中的path对象
+    const token = localStorage.getItem('token');  // 管理员TOKEN
+    console.log(token);
+    if (auth && !token) {  // 路由中 auth为空 或 auth 为真 并且TOKEN 为空  则需要登录
+        return next({ path: '/login' })  // 跳转到login
     }
     next()  // 进行下一个钩子函数
 })
