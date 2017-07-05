@@ -2,11 +2,11 @@
     <div>
         <navbar></navbar>
         <el-row>
-            <el-col :span="6">
+            <el-col :md="3">
                 <sidebar></sidebar>
             </el-col>
-            <el-col :span="18">
-                <div class="grid-content bg-purple-light"></div>
+            <el-col :md="21">
+                <router-view></router-view>
             </el-col>
         </el-row>
     </div>

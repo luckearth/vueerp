@@ -26,11 +26,6 @@ const routes = [
         meta: { auth: false }  // 添加该字段，表示进入这个路由不需要验证
     },
     {
-        path: '/logout',
-        name: '退出',
-        component: resolve => require(['../page/logout.vue'], resolve),
-    },
-    {
         path: '/404',
         name: '错误页面',
         component: resolve => require(['../page/404.vue'], resolve),

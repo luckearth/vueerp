@@ -1,14 +1,18 @@
 <template>
   <div class="login-container">
-    <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left" label-width="0px" class="card-box login-form">
+    <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left" label-width="0" class="card-box login-form">
       <h3 class="title">系统登录</h3>
       <el-form-item prop="username">
-        <span class="svg-container"><wscn-icon-svg icon-class="jiedianyoujian"></wscn-icon-svg></span>
+        <span class="svg-container">
+          <wscn-icon-svg icon-class="jiedianyoujian"></wscn-icon-svg>
+        </span>
         <el-input v-model="loginForm.username" placeholder="请输入账号"></el-input>
       </el-form-item>
-      
+  
       <el-form-item prop="password">
-        <span class="svg-container"><wscn-icon-svg icon-class="mima"></wscn-icon-svg></span>
+        <span class="svg-container">
+          <wscn-icon-svg icon-class="mima"></wscn-icon-svg>
+        </span>
         <el-input v-model="loginForm.password" placeholder="请输入密码" @keyup.enter.native="submitForm"></el-input>
       </el-form-item>
   
@@ -53,10 +57,10 @@ export default {
   },
   watch: {
     token: function (val, oldVal) {
-      console.log('new: %s, old: %s', val, oldVal)
+      //console.log('new: %s, old: %s', val, oldVal)
     },
     userProfile: function (val, oldVal) {
-      console.log('new: %s, old: %s', val, oldVal)
+      //console.log('new: %s, old: %s', val, oldVal)
     },
   },
   computed: mapState(['token', 'userProfile']),
@@ -68,8 +72,8 @@ export default {
           this.loading = true;
           try {
             userLogin(this.loginForm, result => {
+              this.loading = false;
               if (result.success === 1) {//返回API的数据再判断
-                this.loading = false;
                 this.actionUserLogin(result.data);// 更新TOKEN
                 this.$router.push('home');// 跳转
                 this.$message({ message: '登录成功', type: 'success' });// 成功弹窗提示
@@ -79,7 +83,7 @@ export default {
             });
           } catch (error) {
             this.loading = false;
-            console.log('login methods catch', error);
+            //console.log('login methods catch', error);
           }
         }
       });
@@ -92,54 +96,39 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-@import "src/styles/mixin.scss";
-.tips {
-  font-size: 14px;
-  color: #fff;
-  margin-bottom: 5px;
+body {
+  background-color: #2d3a4b;
 }
 
 .login-container {
-  @include relative;
-  height: 100vh;
-  background-color: #2d3a4b;
 
-  input:-webkit-autofill {
-    box-shadow: 0 0 0px 1000px #293444 inset !important;
-    -webkit-text-fill-color: #fff !important;
-  }
   input {
     background: transparent;
     border: 0px;
     -webkit-appearance: none;
     border-radius: 0px;
     padding: 12px 5px 12px 15px;
-    color: #eeeeee;
+    color: #eee;
     height: 47px;
   }
+
   .el-input {
     display: inline-block;
-    height: 47px;
     width: 85%;
   }
+
   .svg-container {
-    padding: 6px 5px 6px 15px;
+    padding: 6px 0 6px 15px;
     color: #889aa4;
   }
 
   .title {
     font-size: 26px;
-    font-weight: 400;
-    color: #eeeeee;
-    margin: 0px auto 40px auto;
+    color: #eee;
     text-align: center;
-    font-weight: bold;
   }
 
   .login-form {
-    position: absolute;
-    left: 0;
-    right: 0;
     width: 400px;
     padding: 35px 35px 15px 35px;
     margin: 120px auto;
@@ -150,10 +139,6 @@ export default {
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
-  }
-
-  .forget-pwd {
-    color: #fff;
   }
 }
 </style>
