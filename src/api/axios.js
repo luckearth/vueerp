@@ -7,9 +7,6 @@ import { baseUrl } from './env'
 // axios 配置
 axios.defaults.timeout = 10000;
 axios.defaults.baseURL = baseUrl;
-// axios.defaults.withCredentials = true;
-// axios.defaults.baseURL = 'http://127.0.0.1/geneerp/api/web/v1/';
-// axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
 // 格式化发送数据
 axios.defaults.transformRequest = [function (data) {
     return qs.stringify(data);

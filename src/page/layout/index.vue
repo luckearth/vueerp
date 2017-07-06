@@ -74,20 +74,23 @@
     </el-row>
 </template>
 <script>
+import { mapActions, mapState } from 'vuex'
 export default {
     data() {
         return {
-            //系统名称
+            // 系统名称
             title: 'ERP管理中心',
-            //简略系统名称
+            // 简略系统名称
             short_title: 'ERP',
-            //是否折叠左边导航
+            // 是否折叠左边导航
             collapsed: false,
-            //用户登录名
-            username: 'admin'
+            // 用户登录名
+            username: ''
         }
     },
     methods: {
+        ...mapActions(['actionUserLogout']),
+
         onSubmit() {
             console.log('submit!');
         },
@@ -99,18 +102,18 @@ export default {
         },
         handleselect: function (a, b) {
         },
-        //退出登录
+        // 退出登录
         logout: function () {
-            var _this = this;
+            var self = this;
             this.$confirm('确认退出吗?', '提示', {
-                //type: 'warning'
+                type: 'warning'
             }).then(() => {
-                sessionStorage.removeItem('user');
-                _this.$router.push('/login');
+                this.actionUserLogout();
+                self.$router.push('/login');
             }).catch(() => {
             });
         },
-        //折叠导航栏
+        // 折叠导航栏
         collapse: function () {
             this.collapsed = !this.collapsed;
         },
@@ -122,8 +125,7 @@ export default {
         var user = sessionStorage.getItem('user');
         if (user) {
             user = JSON.parse(user);
-            this.sysUserName = user.name || '';
-            this.sysUserAvatar = user.avatar || '';
+            this.username = user.username || 'guest';
         }
     }
 }

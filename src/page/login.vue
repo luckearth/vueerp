@@ -76,12 +76,12 @@ export default {
     ...mapActions(['actionUserLogin']),
     submitForm() {
       this.$refs.loginForm.validate((valid) => {
-        if (valid) {//客户端验证成功提交数据API 验证
+        if (valid) {// 客户端验证成功提交数据API 验证
           this.loading = true;
           try {
             apiUserLogin(this.loginForm, result => {
               this.loading = false;
-              if (result.success === 1) {//返回API的数据再判断
+              if (result.success === 1) {// 返回API的数据再判断
                 this.actionUserLogin(result.data);// 更新TOKEN
                 this.$router.push('welcome');// 跳转
                 this.$message.success('登录成功');// 成功弹窗提示

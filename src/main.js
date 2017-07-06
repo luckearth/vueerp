@@ -13,9 +13,8 @@ Vue.config.productionTip = false
 //判断页面是否需要验证
 router.beforeEach(({ meta, path }, from, next) => {
     const { auth = true } = meta   //路由未设置auth则默认初始化为true, meta代表的是to中的meta对象，path代表的是to中的path对象
-    const token = localStorage.getItem('token');  // 管理员TOKEN
-    //console.log(token);
-    if (auth && !token) {  // 路由中 auth为空 或 auth 为真 并且TOKEN 为空  则需要登录
+    const session = sessionStorage.getItem('user');  // session
+    if (auth && !session) {  // 路由中 auth为空 或 auth 为真 并且TOKEN 为空  则需要登录
         return next({ path: '/login' })  // 跳转到login
     }
     next()  // 进行下一个钩子函数
