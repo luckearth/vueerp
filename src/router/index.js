@@ -11,7 +11,7 @@ Vue.use(Router)
  */
 const router = new Router({
   //base: '/',
-  linkActiveClass: 'active',
+  linkActiveClass: 'is-active',
   mode: routerMode,
   routes: routes
 })

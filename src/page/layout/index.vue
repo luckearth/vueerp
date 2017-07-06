@@ -1,8 +1,8 @@
 <template>
     <el-row class="container">
         <el-col :span="24" class="header">
-            <el-col :span="10" class="logo" :class="collapsed?'logo-collapse-width':'logo-width'">
-                {{collapsed?sysShort:sysName}}
+            <el-col :span="10" class="logo" :class="collapsed ? 'logo-collapse-width' : 'logo-width' ">
+                {{collapsed ? short_title : title}}
             </el-col>
             <el-col :span="10">
                 <div class="tools" @click.prevent="collapse">
@@ -12,11 +12,14 @@
             <el-col :span="4" class="userinfo">
                 <el-dropdown trigger="hover">
                     <span class="el-dropdown-link userinfo-inner">
-                        <img :src="this.sysUserAvatar"> {{sysUserName}}</span>
+                        <i class="fa-lg fa fa-user-circle" aria-hidden="true"></i> {{username}}</span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>个人资料</el-dropdown-item>
-                        <el-dropdown-item>修改密码</el-dropdown-item>
-                        <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+                        <el-dropdown-item>
+                            <i class="fa fa-user" aria-hidden="true"></i> 个人资料</el-dropdown-item>
+                        <el-dropdown-item>
+                            <i class="fa fa-lock" aria-hidden="true"></i> 修改密码</el-dropdown-item>
+                        <el-dropdown-item divided @click.native="logout">
+                            <i class="fa fa-sign-out" aria-hidden="true"></i> 退出</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </el-col>
@@ -26,36 +29,28 @@
                 <!--导航菜单-->
                 <el-menu :default-active="$route.path" @open="handleopen" @close="handleclose" @select="handleselect" unique-opened router v-show="!collapsed">
                     <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
-                        <el-submenu :index="index+''" v-if="!item.leaf">
+                        <el-submenu :index="index+''">
                             <template slot="title">
-                                <i :class="item.icon"></i>{{item.name}}
+                                <i :class="item.icon" aria-hidden="true"></i> {{item.name}}
                             </template>
                             <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">
-                                {{child.name}}
+                                <i :class="child.icon" aria-hidden="true"></i> {{child.name}}
                             </el-menu-item>
                         </el-submenu>
-                        <el-menu-item v-if="item.leaf && item.children.length>0" :index="item.children[0].path">
-                            <i :class="item.icon"></i>{{item.children[0].name}}
-                        </el-menu-item>
                     </template>
                 </el-menu>
                 <!--导航菜单-折叠后-->
                 <ul class="el-menu collapsed" v-show="collapsed" ref="menuCollapsed">
                     <li v-for="(item,index) in $router.options.routes" v-if="!item.hidden" class="el-submenu item">
-                        <template v-if="!item.leaf">
-                            <div class="el-submenu__title" style="padding-left: 20px;" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                                <i :class="item.icon"></i>
+                        <template v-if="item.children.length > 0">
+                            <div class="el-submenu__title" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
+                                <i :class="item.icon" aria-hidden="true"></i>
                             </div>
                             <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" style="padding-left: 40px;" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">{{child.name}}</li>
+                                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">
+                                    <i :class="child.icon" aria-hidden="true"></i> {{child.name}}
+                                </li>
                             </ul>
-                        </template>
-                        <template v-else>
-                            <li class="el-submenu">
-                                <div class="el-submenu__title el-menu-item" style="padding-left: 20px;height: 56px;line-height: 56px;padding: 0 20px;" :class="$route.path==item.children[0].path?'is-active':''" @click="$router.push(item.children[0].path)">
-                                    <i :class="item.iconCls"></i>
-                                </div>
-                            </li>
                         </template>
                     </li>
                 </ul>
@@ -71,9 +66,7 @@
                         </el-breadcrumb>
                     </el-col>
                     <el-col :span="24" class="content-wrapper">
-                        <transition name="fade" mode="out-in">
-                            <router-view></router-view>
-                        </transition>
+                        <router-view></router-view>
                     </el-col>
                 </div>
             </section>
@@ -84,21 +77,14 @@
 export default {
     data() {
         return {
-            sysShort: 'ERP',
-            sysName: 'ERP管理中心',
+            //系统名称
+            title: 'ERP管理中心',
+            //简略系统名称
+            short_title: 'ERP',
+            //是否折叠左边导航
             collapsed: false,
-            sysUserName: 'admin',
-            sysUserAvatar: 'https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png',
-            form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
-            }
+            //用户登录名
+            username: 'admin'
         }
     },
     methods: {
@@ -160,13 +146,6 @@ export default {
             .userinfo-inner {
                 cursor: pointer;
                 color: #fff;
-                img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 20px;
-                    margin: 10px 0px 10px 10px;
-                    float: right;
-                }
             }
         }
         .logo {
@@ -175,8 +154,6 @@ export default {
             padding-left: 10px;
             padding-right: 20px;
             border-color: rgba(238, 241, 146, 0.3);
-            border-right-width: 1px;
-            border-right-style: solid;
             img {
                 width: 40px;
                 float: left;
@@ -193,7 +170,6 @@ export default {
             width: 60px
         }
         .tools {
-            padding: 0px 23px;
             width: 14px;
             height: 60px;
             line-height: 60px;
@@ -240,6 +216,7 @@ export default {
             overflow-y: scroll;
             padding: 20px;
             .breadcrumb-container {
+                margin-bottom: 20px;
                 .title {
                     width: 200px;
                     float: left;

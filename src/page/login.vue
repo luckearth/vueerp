@@ -33,13 +33,13 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import { userLogin } from '@/api/apiList'
+import { apiUserLogin } from '@/api/apiList'
 export default {
   // 进入页面之前判断 已登录直接跳转
   beforeRouteEnter(to, from, next) {
     next(vm => {
       if (vm.$store.state.token) {
-        vm.$router.push('home');
+        vm.$router.push('welcome');
       }
     })
   },
@@ -79,11 +79,11 @@ export default {
         if (valid) {//客户端验证成功提交数据API 验证
           this.loading = true;
           try {
-            userLogin(this.loginForm, result => {
+            apiUserLogin(this.loginForm, result => {
               this.loading = false;
               if (result.success === 1) {//返回API的数据再判断
                 this.actionUserLogin(result.data);// 更新TOKEN
-                this.$router.push('home');// 跳转
+                this.$router.push('welcome');// 跳转
                 this.$message.success('登录成功');// 成功弹窗提示
               } else {
                 this.$message.error(result.message);// 错误弹窗提示
