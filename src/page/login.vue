@@ -1,9 +1,9 @@
 <template>
-  <el-form :model="loginForm" :rules="rules" ref="loginForm" class="login-container">
+  <el-form :model="dataLogin" :rules="rulesLogin" ref="formLogin" class="login-container">
     <h3 class="title">系统登录</h3>
   
     <el-form-item prop="username">
-      <el-input v-model="loginForm.username" placeholder="请输入账号">
+      <el-input v-model="dataLogin.username" placeholder="请输入账号">
         <template slot="prepend">
           <div class="icon-container">
             <i class="fa fa-user" aria-hidden="true"></i>
@@ -13,7 +13,7 @@
     </el-form-item>
   
     <el-form-item prop="password">
-      <el-input v-model="loginForm.password" placeholder="请输入密码" @keyup.enter.native="submitForm">
+      <el-input v-model="dataLogin.password" placeholder="请输入密码" @keyup.enter.native="submitForm">
         <template slot="prepend">
           <div class="icon-container">
             <i class="fa fa-lock" aria-hidden="true"></i>
@@ -22,10 +22,10 @@
       </el-input>
     </el-form-item>
   
-    <el-checkbox v-model="loginForm.remember" class="remember">记住密码</el-checkbox>
+    <el-checkbox v-model="dataLogin.remember" class="remember">记住密码</el-checkbox>
   
     <el-form-item>
-      <el-button class="btn-submit" type="primary" :loading="loading" @click.native.prevent="submitForm">登录</el-button>
+      <el-button class="btn-submit" type="primary" :loading="loadingLogin" @click.native.prevent="submitForm">登录</el-button>
     </el-form-item>
   
   </el-form>
@@ -45,13 +45,13 @@ export default {
   },
   data() {
     return {
-      loginForm: {
+      dataLogin: {
         username: '18016011673',
         password: '123456',
         remember: true
       },
-      loading: false,
-      rules: {
+      loadingLogin: false,
+      rulesLogin: {
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
           { min: 6, max: 20, message: '长度在 6 到 20 个字符', trigger: 'blur' }
@@ -75,12 +75,12 @@ export default {
   methods: {
     ...mapActions(['actionUserLogin']),
     submitForm() {
-      this.$refs.loginForm.validate((valid) => {
+      this.$refs.formLogin.validate((valid) => {
         if (valid) {// 客户端验证成功提交数据API 验证
-          this.loading = true;
+          this.loadingLogin = true;
           try {
-            apiUserLogin(this.loginForm, result => {
-              this.loading = false;
+            apiUserLogin(this.dataLogin, result => {
+              this.loadingLogin = false;
               if (result.success === 1) {// 返回API的数据再判断
                 this.actionUserLogin(result.data);// 更新TOKEN
                 this.$router.push('welcome');// 跳转
@@ -90,13 +90,13 @@ export default {
               }
             });
           } catch (error) {
-            this.loading = false;
+            this.loadingLogin = false;
           }
         }
       });
     },
     resetForm() {
-      this.$refs.loginForm.resetFields();// 重置表单
+      this.$refs.formLogin.resetFields();// 重置表单
     }
   }
 }
