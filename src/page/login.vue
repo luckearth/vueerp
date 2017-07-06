@@ -91,7 +91,6 @@ export default {
             });
           } catch (error) {
             this.loading = false;
-            //console.log('login methods catch', error);
           }
         }
       });
@@ -104,7 +103,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .login-container {
-  /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
   -webkit-border-radius: 5px;
   border-radius: 5px;
   -moz-border-radius: 5px;
@@ -124,6 +122,9 @@ export default {
     padding: 5px;
     color: #889aa4;
   }
-  .btn-submit{width:100%;margin-top:20px;}
+  .btn-submit {
+    width: 100%;
+    margin-top: 20px;
+  }
 }
 </style>
