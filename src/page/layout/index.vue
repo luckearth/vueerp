@@ -25,7 +25,7 @@
             </el-col>
         </el-col>
         <el-col :span="24" class="main">
-            <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
+            <aside :class="collapsed ? 'menu-collapsed' : 'menu-expanded'">
                 <!--导航菜单-->
                 <el-menu :default-active="$route.path" @open="handleopen" @close="handleclose" @select="handleselect" unique-opened router v-show="!collapsed">
                     <template v-for="(item,index) in $router.options.routes" v-if="!item.hidden">
@@ -47,7 +47,7 @@
                                 <i :class="item.icon" aria-hidden="true"></i>
                             </div>
                             <ul class="el-menu submenu" :class="'submenu-hook-'+index" @mouseover="showMenu(index,true)" @mouseout="showMenu(index,false)">
-                                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" :class="$route.path==child.path?'is-active':''" @click="$router.push(child.path)">
+                                <li v-for="child in item.children" v-if="!child.hidden" :key="child.path" class="el-menu-item" :class="$route.path == child.path ? 'is-active' :'' " @click="$router.push(child.path)">
                                     <i :class="child.icon" aria-hidden="true"></i> {{child.name}}
                                 </li>
                             </ul>
