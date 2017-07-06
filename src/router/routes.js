@@ -23,13 +23,15 @@ const routes = [
         path: '/login',
         name: '登录',
         component: resolve => require(['../page/login.vue'], resolve),
-        meta: { auth: false }  // 添加该字段，表示进入这个路由不需要验证
+        meta: { auth: false },  // 添加该字段，表示进入这个路由不需要验证
+        hidden: true
     },
     {
         path: '/404',
         name: '错误页面',
         component: resolve => require(['../page/404.vue'], resolve),
-        meta: { auth: false }  // 添加该字段，表示进入这个路由不需要验证
+        meta: { auth: false },  // 添加该字段，表示进入这个路由不需要验证
+        hidden: true
     },
     {
         path: '/article',
@@ -77,7 +79,8 @@ const routes = [
     {
         path: '*',
         redirect: '/404',
-        meta: { auth: false }
+        meta: { auth: false },
+        hidden: true
     }
 ]
 

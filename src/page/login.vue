@@ -1,27 +1,34 @@
 <template>
-  <div class="login-container">
-    <el-form :model="loginForm" :rules="rules" ref="loginForm" label-position="left" label-width="0" class="card-box login-form">
-      <h3 class="title">系统登录</h3>
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <wscn-icon-svg icon-class="jiedianyoujian"></wscn-icon-svg>
-        </span>
-        <el-input v-model="loginForm.username" placeholder="请输入账号"></el-input>
-      </el-form-item>
+  <el-form :model="loginForm" :rules="rules" ref="loginForm" class="login-container">
+    <h3 class="title">系统登录</h3>
   
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <wscn-icon-svg icon-class="mima"></wscn-icon-svg>
-        </span>
-        <el-input v-model="loginForm.password" placeholder="请输入密码" @keyup.enter.native="submitForm"></el-input>
-      </el-form-item>
+    <el-form-item prop="username">
+      <el-input v-model="loginForm.username" placeholder="请输入账号">
+        <template slot="prepend">
+          <div class="icon-container">
+            <i class="fa fa-user" aria-hidden="true"></i>
+          </div>
+        </template>
+      </el-input>
+    </el-form-item>
   
-      <el-form-item>
-        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="submitForm">登录</el-button>
-      </el-form-item>
+    <el-form-item prop="password">
+      <el-input v-model="loginForm.password" placeholder="请输入密码" @keyup.enter.native="submitForm">
+        <template slot="prepend">
+          <div class="icon-container">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </div>
+        </template>
+      </el-input>
+    </el-form-item>
   
-    </el-form>
-  </div>
+    <el-checkbox v-model="loginForm.remember" class="remember">记住密码</el-checkbox>
+  
+    <el-form-item>
+      <el-button class="btn-submit" type="primary" :loading="loading" @click.native.prevent="submitForm">登录</el-button>
+    </el-form-item>
+  
+  </el-form>
 </template>
 
 <script>
@@ -39,8 +46,9 @@ export default {
   data() {
     return {
       loginForm: {
-        username: 'sushipai',
-        password: '123456'
+        username: '18016011673',
+        password: '123456',
+        remember: true
       },
       loading: false,
       rules: {
@@ -76,9 +84,9 @@ export default {
               if (result.success === 1) {//返回API的数据再判断
                 this.actionUserLogin(result.data);// 更新TOKEN
                 this.$router.push('home');// 跳转
-                this.$message({ message: '登录成功', type: 'success' });// 成功弹窗提示
+                this.$message.success('登录成功');// 成功弹窗提示
               } else {
-                this.$message(result.message);// 错误弹窗提示
+                this.$message.error(result.message);// 错误弹窗提示
               }
             });
           } catch (error) {
@@ -94,51 +102,28 @@ export default {
   }
 }
 </script>
-
-<style rel="stylesheet/scss" lang="scss">
-body {
-  background-color: #2d3a4b;
-}
-
+<style lang="scss" scoped>
 .login-container {
-
-  input {
-    background: transparent;
-    border: 0px;
-    -webkit-appearance: none;
-    border-radius: 0px;
-    padding: 12px 5px 12px 15px;
-    color: #eee;
-    height: 47px;
+  /*box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.06), 0 1px 0px 0 rgba(0, 0, 0, 0.02);*/
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  background-clip: padding-box;
+  margin: 180px auto;
+  width: 350px;
+  padding: 35px 35px 15px 35px;
+  background: #fff;
+  border: 1px solid #eaeaea;
+  box-shadow: 0 0 25px #cac6c6;
+  .title {
+    margin: 0px auto 40px auto;
+    text-align: center;
+    color: #505458;
   }
-
-  .el-input {
-    display: inline-block;
-    width: 85%;
-  }
-
-  .svg-container {
-    padding: 6px 0 6px 15px;
+  .icon-container {
+    padding: 5px;
     color: #889aa4;
   }
-
-  .title {
-    font-size: 26px;
-    color: #eee;
-    text-align: center;
-  }
-
-  .login-form {
-    width: 400px;
-    padding: 35px 35px 15px 35px;
-    margin: 120px auto;
-  }
-
-  .el-form-item {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    color: #454545;
-  }
+  .btn-submit{width:100%;margin-top:20px;}
 }
 </style>

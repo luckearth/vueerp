@@ -1,5 +1,5 @@
 <template>
-    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose">
+    <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
         <el-submenu index="1">
             <template slot="title">
                 <i class="el-icon-message"></i>导航一</template>
@@ -36,3 +36,5 @@ export default {
     }
 }
 </script>
+<style rel="stylesheet/scss" lang="scss">
+</style>
