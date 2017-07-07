@@ -78,25 +78,32 @@ export default {
       this.$refs.formLogin.validate((valid) => {
         if (valid) {// 客户端验证成功提交数据API 验证
           this.loadingLogin = true;
-          try {
-            apiUserLogin(this.dataLogin, result => {
+          apiUserLogin(
+            this.dataLogin,
+            //回调函数
+            result => {
               this.loadingLogin = false;
-              if (result.success === 1) {// 返回API的数据再判断
-                this.actionUserLogin(result.data);// 更新TOKEN
-                this.$router.push('welcome');// 跳转
-                this.$message.success('登录成功');// 成功弹窗提示
+              //返回数据中是否是数组或对象，该数组或对象中是否包含字段success 
+              if (result.hasOwnProperty('success')) {
+                if (result.success === 1) {// 返回API的数据再判断
+                  this.actionUserLogin(result.data);// 更新TOKEN
+                  this.$router.push('welcome');// 跳转
+                  this.$message.success('登录成功');// 成功弹窗提示
+                } else {
+                  this.$message.error(result.message);// 错误弹窗提示
+                  return;
+                }
               } else {
-                this.$message.error(result.message);// 错误弹窗提示
+                //意外错误直接提示
+                this.$message.error(result);
               }
-            });
-          } catch (error) {
-            this.loadingLogin = false;
-          }
+            }
+          );
         }
       });
     },
     resetForm() {
-      this.$refs.formLogin.resetFields();// 重置表单
+      this.$refs.formLogin.resetFields();// 重置表单 未使用
     }
   }
 }

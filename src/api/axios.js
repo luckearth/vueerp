@@ -5,7 +5,7 @@ import * as types from '../store/mutation-types'
 import qs from 'qs'
 import { baseUrl } from './env'
 // axios 配置
-axios.defaults.timeout = 10000;
+axios.defaults.timeout = 5000;
 axios.defaults.baseURL = baseUrl;
 // 格式化发送数据
 axios.defaults.transformRequest = [function (data) {
@@ -24,6 +24,7 @@ axios.interceptors.request.use(
 
     },
     function (error) {
+        alert('request1');
         return Promise.reject(error);
     }
 );
@@ -40,8 +41,6 @@ axios.interceptors.response.use(
             console.log(error.response.data);
             console.log(error.response.status);
             console.log(error.response.headers);
-        } else {
-            console.log(error);
         }
         return Promise.reject(error);
     }
@@ -53,7 +52,8 @@ function get(url, params, callFunction) {
             .then((data) => {
                 return resolve(callFunction(data.data));
             }).catch(error => {
-                console.log(error);
+                // 意外错误直接通过回调函数返回，回调函数会判断处理错误结果
+                return resolve(callFunction(error));
             })
     });
 }
@@ -64,7 +64,8 @@ function post(url, params, callFunction) {
             .then((data) => {
                 return resolve(callFunction(data.data));
             }).catch(error => {
-                console.log(error);
+                // 意外错误直接通过回调函数返回，回调函数会判断处理错误结果
+                return resolve(callFunction(error));
             })
     });
 }

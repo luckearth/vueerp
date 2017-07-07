@@ -178,19 +178,20 @@ export default {
             this.$refs.formChangePassword.validate((valid) => {
                 if (valid) {// 客户端验证成功提交数据API 验证
                     this.loadingChangePassword = true;
-                    try {
-                        apiUserChangePassword(this.dataChangePassword, result => {
-                            this.loadingChangePassword = false;
+                    apiUserChangePassword(this.dataChangePassword, result => {
+                        this.loadingChangePassword = false;
+                        if (result.hasOwnProperty('success')) {
                             if (result.success === 1) {// 返回API的数据再判断
                                 this.visibleChangePassword = false;// 隐藏修改密码表单
                                 this.$message.success('修改密码成功');
                             } else {
                                 this.$message.error(result.message);// 错误弹窗提示
                             }
-                        });
-                    } catch (error) {
-                        this.loadingChangePassword = false;
-                    }
+                        } else {
+                            //意外错误直接提示
+                            this.$message.error(result);
+                        }
+                    });
                 }
             });
         },
